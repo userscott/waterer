@@ -1,0 +1,79 @@
+let Soil = 0
+let Reading = 0
+input.onButtonPressed(Button.A, () => {
+    basic.clearScreen()
+    Reading = pins.analogReadPin(AnalogPin.P0)
+    Soil = pins.map(
+        Reading,
+        0,
+        1023,
+        100,
+        1
+    )
+    basic.showNumber(Soil)
+    basic.pause(1000)
+    basic.clearScreen()
+    if (Soil < 50) {
+        basic.showLeds(`
+            # . . . #
+            # . . . #
+            # . . . #
+            # . # . #
+            . # . # .
+            `)
+        pins.digitalWritePin(DigitalPin.P1, 1)
+        basic.pause(1500)
+        pins.digitalWritePin(DigitalPin.P1, 0)
+    } else {
+        basic.showIcon(IconNames.Yes)
+        basic.pause(5000)
+    }
+})
+input.onButtonPressed(Button.B, () => {
+    basic.clearScreen()
+    basic.showLeds(`
+        # . . . #
+        # . . . #
+        # . . . #
+        # . # . #
+        . # . # .
+        `)
+    pins.digitalWritePin(DigitalPin.P1, 1)
+    basic.pause(1500)
+    pins.digitalWritePin(DigitalPin.P1, 0)
+})
+input.onGesture(Gesture.Shake, () => {
+    basic.clearScreen()
+    basic.showString("Oi!")
+})
+basic.forever(() => {
+    basic.clearScreen()
+    Reading = pins.analogReadPin(AnalogPin.P0)
+    Soil = pins.map(
+        Reading,
+        0,
+        1023,
+        100,
+        1
+    )
+    basic.showNumber(Soil)
+    basic.pause(1000)
+    basic.clearScreen()
+    if (Soil < 50) {
+        basic.showLeds(`
+            # . . . #
+            # . . . #
+            # . . . #
+            # . # . #
+            . # . # .
+            `)
+        pins.digitalWritePin(DigitalPin.P1, 1)
+        basic.pause(1500)
+        pins.digitalWritePin(DigitalPin.P1, 0)
+        basic.showIcon(IconNames.Yes)
+        basic.pause(600000)
+    } else {
+        basic.showIcon(IconNames.Yes)
+        basic.pause(5000)
+    }
+})
